@@ -3,4 +3,5 @@ public interface SkinConsultationManager {
     void deleteDoctor();
     void printDoctors();
     void saveFile();
+    void openGui();
 }

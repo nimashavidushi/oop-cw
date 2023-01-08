@@ -1,8 +1,11 @@
 import javax.imageio.IIOException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class WestminsterSkinConsultationManager implements SkinConsultationManager{
@@ -28,6 +31,23 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
 
 
     public static void main(String[] args){
+        try{
+            List<String> listOfStrings;
+
+            // load the data from file
+            listOfStrings = Files.readAllLines(Paths.get("myDoctor.txt"));
+
+            // convert arraylist to array
+            String[] array
+                    = listOfStrings.toArray(new String[0]);
+
+            // print each line of string in array
+            for (String eachString : array) {
+                eachString = eachString.substring(eachString.lastIndexOf(":") + 1);
+                System.out.println(eachString);
+            }
+        }catch (Exception e){
+            System.out.println(e);}
 
         String option;
         do {
@@ -37,6 +57,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 System.out.println("D.  delete a doctor");
                 System.out.println("P.  print the doctors");
                 System.out.println("S.  save to a file");
+                System.out.println("G.  open GUI");
                 System.out.println("E.  exit");
                 System.out.println("Choose an option");
                 option = input.nextLine().toUpperCase();
@@ -54,6 +75,9 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                     case "S":
                         obj.saveFile();
                         break;
+                    case "G":
+                        obj.openGui();
+                        break;
                     case "E":
                         System.exit(0);
                         break;
@@ -62,15 +86,18 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 System.out.println("Invalid input");
                 input.nextLine();
             }
-            ConsultGui gui = new ConsultGui();
+
         }while (true);
 
     }
 
+
+
     @Override
     public void addDoctor() {
         while (true) {
-            if (doctorNum < 2) {
+            // to add only 10 doctors
+            if (doctorNum < 10) {
                 System.out.println("Enter the first name of the doctor:");
                 String name = input.nextLine();
                 System.out.println("enter sur name of the doctor:");
@@ -86,13 +113,14 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 String specialisation = input.nextLine();
                 String workDays;
                 while (true) {
-                    System.out.println("enter day and time");
+                    System.out.println("enter day available");
                     workDays = input.nextLine();
-                    System.out.println("enter time");
+                    System.out.println("enter time available (morning or evening)");
                     String workHours = input.nextLine();
                     if (workDays.equals("q")) {
                         break;
                     }
+                    //adding details to array lists based on available day and time
                     if (workDays.equals("monday") && workHours.equals("morning")) {
                         MonMor.add(name);
                     }
@@ -136,11 +164,9 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                         SunEve.add(name);
                     }
                 }
-                System.out.println(MonMor);
-                System.out.println(MonMor.size());
 
                 Doctor doctorsObj = new Doctor(name, surName, birth, contactNum, licenseNum, specialisation);
-                doctors.add(doctorsObj);
+                doctors.add(doctorsObj); //adding doctor details to an arraylist
                 for (Doctor obj : doctors) {
                     System.out.println(obj.getName() + "\n" + obj.getSurName() + "\n" + obj.getBirth() + "\n" + obj.getContactNum() + "\n" + obj.getLicenseNum() + "\n" + obj.getSpecialisation());
                     surNames.add(obj.getSurName());
@@ -175,7 +201,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
                 break;
             }
             else {
-                System.out.println("You haven't add any doctors to delete.");
+                System.out.println("You haven't add any doctors to delete.");//if no doctors are there in the consultation
                 break;
             }
         }
@@ -184,7 +210,7 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
 
     @Override
     public void printDoctors() {
-        Collections.sort(doctors, Doctor.surNameComparator);
+        Collections.sort(doctors, Doctor.surNameComparator);//sorting by using surnames
         for (Doctor obj : doctors){
             System.out.println("First name: "+obj.getName()+"\n"+"Last name:"+obj.getSurName()+"\n"+" Date of Birth: "+obj.getBirth()+"\n"+" Contact Number: "+obj.getContactNum()+"\n"+" License number: "+obj.getLicenseNum()+"\n"+" Specialisation: "+obj.getSpecialisation());
         }
@@ -202,5 +228,11 @@ public class WestminsterSkinConsultationManager implements SkinConsultationManag
             System.err.println("file not found");
         }
     }
+
+    @Override
+    public void openGui() {
+        ConsultGui gui = new ConsultGui();
+    }
+
 
 }

@@ -37,7 +37,7 @@ public class ConsultGui implements ActionListener {
 
     public ConsultGui() {
         frame = new JFrame("Doctors");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(700, 800);
         frame.setLayout(null);
 

@@ -42,7 +42,7 @@ public class CalendarPage implements ActionListener {
 
     CalendarPage(){
         frame1 = new JFrame("Calendar");
-        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame1.setSize(2000, 800);
         frame1.setLayout(null);
 
