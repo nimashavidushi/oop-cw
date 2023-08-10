@@ -5,7 +5,7 @@ public class Patient extends Person{
         super(name, surName, birth, contactNum);
         this.idNum=idNum;
     }
-    //check commit
+    //check commits
     public int getIdNum() {
         return idNum;
     }
