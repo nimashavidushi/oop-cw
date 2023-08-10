@@ -1,10 +1,11 @@
 public class Patient extends Person{
     private int idNum;
+    //patient details
     Patient(String name, String surName, String birth, int contactNum, int idNum) {
         super(name, surName, birth, contactNum);
         this.idNum=idNum;
     }
-
+    //check commit
     public int getIdNum() {
         return idNum;
     }
