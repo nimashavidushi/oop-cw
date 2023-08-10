@@ -32,7 +32,7 @@ public class Doctor extends Person{
     public void setLicenseNum(int licenseNum) {
         this.licenseNum = licenseNum;
     }
-    //function
+    //functions
     public void setSpecialisation(String specialisation) {
         this.specialisation = specialisation;
     }
